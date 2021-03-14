@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Deploy or Update the Infra') { 
             steps {
-                sh "cd terraform-app-env && terraform init && terraform apply -auto-approve" 
+                sh "cd terraform-app-env && sudo terraform init && sudo terraform apply -auto-approve" 
             }
         }
         stage('Push Image to ECR Repo') { 
@@ -18,17 +18,17 @@ pipeline {
         }
         stage('Deploy to Dev') { 
             steps {
-                 sh "ssh ubuntu@54.147.236.110 bash /home/ubuntu/app-deploy.sh"
+                 sh "ssh ubuntu@54.147.236.110 -i key.pem  bash /home/ubuntu/app-deploy.sh"
             }
         }
         stage('Deploy to QA') { 
             steps {
-                 sh "ssh ubuntu@54.209.227.131 bash /home/ubuntu/app-deploy.sh"
+                 sh "ssh ubuntu@54.209.227.131 -i key.pem  bash /home/ubuntu/app-deploy.sh"
             }
         }
         stage('Deploy to Prod') { 
             steps {
-                 sh "ssh ubuntu@3.92.198.18 bash /home/ubuntu/app-deploy.sh"
+                 sh "ssh ubuntu@3.92.198.18 -i key.pem  bash /home/ubuntu/app-deploy.sh"
             }
         }
     }
