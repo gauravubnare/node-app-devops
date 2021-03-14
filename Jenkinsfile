@@ -18,17 +18,17 @@ pipeline {
         }
         stage('Deploy to Dev') { 
             steps {
-                 sh "ssh ubuntu@34.237.245.169 -i key.pem  bash -x /home/ubuntu/app-deploy.sh"
+                 sh "dev=$(aws ec2 describe-instances --filter 'Name=tag:Name,Values=Dev Server' 'Name=instance-state-name,Values=running' --query 'Reservations[*].Instances[*].PublicIpAddress' --output=text --region=us-east-1) && ssh ubuntu@$dev -i key.pem  bash -x /home/ubuntu/app-deploy.sh"
             }
         }
         stage('Deploy to QA') { 
             steps {
-                 sh "ssh ubuntu@18.208.138.118 -i key.pem  bash -x /home/ubuntu/app-deploy.sh"
+                 sh "qa=$(aws ec2 describe-instances --filter 'Name=tag:Name,Values=QA Server' 'Name=instance-state-name,Values=running' --query 'Reservations[*].Instances[*].PublicIpAddress' --output=text --region=us-east-1) && ssh ubuntu@$qa -i key.pem  bash -x /home/ubuntu/app-deploy.sh"
             }
         }
         stage('Deploy to Prod') { 
             steps {
-                 sh "ssh ubuntu@3.91.203.80 -i key.pem  bash -x /home/ubuntu/app-deploy.sh"
+                 sh "prod=$(aws ec2 describe-instances --filter 'Name=tag:Name,Values=Prod Server' 'Name=instance-state-name,Values=running' --query 'Reservations[*].Instances[*].PublicIpAddress' --output=text --region=us-east-1) && ssh ubuntu@$prod -i key.pem  bash -x /home/ubuntu/app-deploy.sh"
             }
         }
     }
