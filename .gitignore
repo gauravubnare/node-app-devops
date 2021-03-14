@@ -1,0 +1,5 @@
+terraform-app-env/.terraform*
+
+# .tfstate files
+terraform-app-env/*.tfstate
+terraform-app-env/*.tfstate.*
