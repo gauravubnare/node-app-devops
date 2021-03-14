@@ -16,6 +16,11 @@ pipeline {
                 sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 820990632491.dkr.ecr.us-east-1.amazonaws.com/node-app && docker tag app:latest 820990632491.dkr.ecr.us-east-1.amazonaws.com/node-app && docker push 820990632491.dkr.ecr.us-east-1.amazonaws.com/node-app:latest"
             }
         }
+        stage ("Sleep")
+            steps {
+                    sh "sleep 300"
+            }
+        }
         stage('Deploy to Dev') { 
             steps {
                  sh "chmod 400 key.pem && dev=\$(aws ec2 describe-instances --filter 'Name=tag:Name,Values=Dev Server' 'Name=instance-state-name,Values=running' --query 'Reservations[*].Instances[*].PublicIpAddress' --output=text --region=us-east-1) && ssh ubuntu@\$dev -i key.pem  bash -x /home/ubuntu/app-deploy.sh"
