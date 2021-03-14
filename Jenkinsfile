@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh "cd docker-prod && docker build -t app:latest ." 
+                sh "cd docker-app && docker build -t app:latest ." 
             }
         }
         stage('Deploy or Update the Infra') { 
