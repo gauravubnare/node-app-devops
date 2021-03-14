@@ -6,6 +6,11 @@ pipeline {
                 sh "cd docker-prod && docker build -t app:latest ." 
             }
         }
+        stage('Deploy or Update the Infra') { 
+            steps {
+                sh "cd terraform-app-env && terraform init && terraform apply -auto-approve" 
+            }
+        }
         stage('Push Image to ECR Repo') { 
             steps {
                 sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 820990632491.dkr.ecr.us-east-1.amazonaws.com/node-app && docker tag app:latest 820990632491.dkr.ecr.us-east-1.amazonaws.com/node-app && docker push 820990632491.dkr.ecr.us-east-1.amazonaws.com/node-app:latest"
