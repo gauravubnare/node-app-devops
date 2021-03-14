@@ -18,17 +18,17 @@ pipeline {
         }
         stage('Deploy to Dev') { 
             steps {
-                 sh "ssh ubuntu@54.147.236.110 -i key.pem  bash /home/ubuntu/app-deploy.sh"
+                 sh "ssh ubuntu@34.237.245.169 -i key.pem  bash -x /home/ubuntu/app-deploy.sh"
             }
         }
         stage('Deploy to QA') { 
             steps {
-                 sh "ssh ubuntu@54.209.227.131 -i key.pem  bash /home/ubuntu/app-deploy.sh"
+                 sh "ssh ubuntu@18.208.138.118 -i key.pem  bash -x /home/ubuntu/app-deploy.sh"
             }
         }
         stage('Deploy to Prod') { 
             steps {
-                 sh "ssh ubuntu@3.92.198.18 -i key.pem  bash /home/ubuntu/app-deploy.sh"
+                 sh "ssh ubuntu@3.91.203.80 -i key.pem  bash -x /home/ubuntu/app-deploy.sh"
             }
         }
     }
