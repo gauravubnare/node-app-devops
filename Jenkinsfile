@@ -16,7 +16,7 @@ pipeline {
                 sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 820990632491.dkr.ecr.us-east-1.amazonaws.com/node-app && docker tag app:latest 820990632491.dkr.ecr.us-east-1.amazonaws.com/node-app && docker push 820990632491.dkr.ecr.us-east-1.amazonaws.com/node-app:latest"
             }
         }
-        stage ("Sleep")
+        stage ("Sleep") {
             steps {
                     sh "sleep 300"
             }
