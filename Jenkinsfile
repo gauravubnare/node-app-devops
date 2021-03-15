@@ -18,7 +18,7 @@ pipeline {
         }
         stage ("Sleep") {
             steps {
-                    sh "sleep 300"
+                    sh "sleep 180"
             }
         }
         stage('Deploy to Dev') { 
